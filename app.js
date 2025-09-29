@@ -14,6 +14,9 @@ import authrouter from "./routes/authRoutes.js"; // Importing authentication rou
 dotenv.config(); // Loading environment variables from .env file
 const app = express(); // Initializing express application
 
+
+
+
 //SESSION
 app.use(
   session({
@@ -63,15 +66,23 @@ app.set("views", path.join(path.resolve(), "views")); // Define template directo
 // DB Connection
 connectUsingMongoose();
 
-//ROUTES
+// Home route
 app.get("/", (req, res) => {
-  res.send("Hey Ninja ! Go to /user/signin for the login page.");
+  res.render("homepage", { // hoặc "home" nếu bạn đổi tên file
+    studentId: "22687891",
+    fullname: "Duong Thi Thanh Thao"
+  });
 });
+
+// Authentication routes
 app.use("/user", router);
 app.use("/auth", authrouter);
+
+// Static files
 app.use(express.static("public"));
+
 
 //LISTEN
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log(`Server is running on port: http://localhost:${process.env.PORT}`);
 });
